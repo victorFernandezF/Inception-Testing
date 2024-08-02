@@ -20,5 +20,8 @@ COPY html /var/www/html
 # Exponer el puerto 443 para HTTPS
 EXPOSE 443
 
+#docker compose up -d
+#docker exec -it <nombre_del_contenedor> /bin/bash
+
 # Iniciar el servidor Nginx
 CMD ["nginx", "-g", "daemon off;"]
