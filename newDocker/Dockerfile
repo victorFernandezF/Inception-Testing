@@ -1,15 +1,13 @@
-# Dockerfile.debian
-
-# Use Debian as the base image
 FROM debian:latest
 
-# Install NGINX
+# Actualizar la lista de paquetes e instalar Nginx
 RUN apt-get update && apt-get install -y nginx
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copiar el archivo index.html al directorio de Nginx
+COPY ./html /var/www/html
 
-# Expose port 80 for HTTP
+# Exponer el puerto 80 para acceder al servidor
 EXPOSE 80
 
-# Start NGINX in the foreground
+# Iniciar el servidor Nginx
 CMD ["nginx", "-g", "daemon off;"]

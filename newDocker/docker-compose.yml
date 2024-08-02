@@ -1,11 +1,13 @@
-version: "3"
-
+version: "3.8"
 services:
-  new-nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  web:
+    build: .
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
-      - ./index.html:/usr/share/nginx/html/index.html
+      - ./html:/var/www/html
+    networks:
+      - webnet
+
+networks:
+  webnet:
