@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: "nginx"
+    build:
+      context: ./requeriments/nginx
+      dockerfile: Dockerfile
+    ports:
+      - 443:443
+    volumes:
+      - ./requeriments/nginx/html:/var/www/html
+    networks:
+      - webnet
+
+networks:
+  webnet:
