@@ -2,7 +2,9 @@ version: "3.8"
 services:
   nginx:
     container_name: "nginx"
-    build: ./requeriments/nginx
+    build:
+      context: ./requeriments/nginx
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
     volumes:
