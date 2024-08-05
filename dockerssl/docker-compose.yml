@@ -6,7 +6,7 @@ services:
       context: ./requeriments/nginx
       dockerfile: Dockerfile
     ports:
-      - 443:443
+      - 8080:443
     volumes:
       - ./requeriments/nginx/html:/var/www/html
     networks:
