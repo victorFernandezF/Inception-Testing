@@ -11,12 +11,12 @@ services:
       - ./requeriments/nginx/html:/var/www/html
     networks:
       - webnet
+
   mariadb:
     container_name: "mariadb"
     build: ./requeriments/mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
-    # in case of problem we restart automatically the container
     networks:
       - webnet
     restart: always
