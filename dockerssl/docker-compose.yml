@@ -18,7 +18,19 @@ services:
       - mariadb_data:/var/lib/mysql
     # in case of problem we restart automatically the container
     networks:
-      - network
+      - webnet
     restart: always
     env_file:
       - .env
+
+networks:
+  webnet:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/vbachele/data/mysql
+      o: bind
