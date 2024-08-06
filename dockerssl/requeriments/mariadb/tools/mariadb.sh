@@ -2,7 +2,7 @@
 
 mysql_install_db
 
-/etc/init.d/mysql start
+/etc/init.d/mysql start || { echo "MariaDB no pudo iniciar"; exit 1; }
 
 #Check if the database exists
 
