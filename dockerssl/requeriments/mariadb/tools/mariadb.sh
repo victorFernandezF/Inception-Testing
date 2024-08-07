@@ -1,36 +1,36 @@
 #!/bin/sh
 
-mysqld --bind-address=0.0.0.0
+#mysqld --bind-address=0.0.0.0
 
-#mysql_install_db
+mysql_install_db
 
-#/etc/init.d/mysql start || { echo "MariaDB no pudo iniciar"; exit 1; }
+/etc/init.d/mysql start || { echo "MariaDB no pudo iniciar"; exit 1; }
 
 #Check if the database exists
 
-#if [ -d "/var/lib/mysql/$MYSQL_DATABASE" ]
-#then 
+if [ -d "/var/lib/mysql/$MYSQL_DATABASE" ]
+then 
 
-#	echo "Database already exists"
-#else
+	echo "Database already exists"
+else
 
 # Set root option so that connexion without root password is not possible
 
-#mysql_secure_installation << _EOF_
+mysql_secure_installation << _EOF_
 
-#Y
-#root4life
-#root4life
-#Y
-#n
-#Y
-#Y
-#_EOF_
+Y
+root4life
+root4life
+Y
+n
+Y
+Y
+_EOF_
 
 #Add a root user on 127.0.0.1 to allow remote connexion 
 #Flush privileges allow to your sql tables to be updated automatically when you modify it
 #mysql -uroot launch mysql command line client
-#echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot
+echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot
 
 #Create database and user in the database for wordpress
 
@@ -41,6 +41,6 @@ mysqld --bind-address=0.0.0.0
 
 #fi
 
-#/etc/init.d/mysql stop
+/etc/init.d/mysql stop
 
-#exec "$@"
+exec "$@"
