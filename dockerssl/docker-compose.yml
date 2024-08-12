@@ -21,7 +21,7 @@ services:
     networks:
       - webnet
     volumes:
-      - "mariadb:/var/lib/mysql"
+      - "/var/lib/mysql"
     expose:
       - 3306
     restart: always
