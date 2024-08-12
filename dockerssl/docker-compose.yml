@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   nginx:
-    container_name: "nginx2"
+    container_name: "nginx"
     build:
       context: ./requeriments/nginx
       dockerfile: Dockerfile
@@ -13,19 +13,27 @@ services:
       - webnet
 
   mariadb:
-    container_name: "mariadb"
-    build: ./requeriments/mariadb
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    networks:
-      - webnet
-    restart: always
+    container_name: mariadb
+    hostname: mariadb.srcs_inception
+    build: requirements/mariadb/
     env_file:
       - .env
+    networks:
+      - webnet
+    volumes:
+      - "mariadb:/var/lib/mysql"
+    expose:
+      - 3306
+    restart: always
 
 networks:
   webnet:
     driver: bridge
 
 volumes:
-  mariadb_data:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/home/victofer/data/mariadb/"
