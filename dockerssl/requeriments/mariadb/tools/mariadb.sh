@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld
+
 # Start MariaDB service
 service mariadb start
 
