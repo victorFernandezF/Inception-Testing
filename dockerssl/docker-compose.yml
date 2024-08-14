@@ -11,7 +11,7 @@ services:
     volumes:
       - "/var/lib/mysql"
     expose:
-      - 3306
+      - 3306:3306
     restart: always
 
 networks:
