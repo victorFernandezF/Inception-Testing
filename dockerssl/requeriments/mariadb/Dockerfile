@@ -7,4 +7,4 @@ COPY tools/mariadb.sh /
 RUN chmod +x /mariadb.sh
 
 
-CMD ["/bin/bash"]
+CMD ["/mariadb.sh"]
