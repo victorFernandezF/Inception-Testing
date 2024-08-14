@@ -12,6 +12,20 @@ services:
     networks:
       - webnet
 
+  mariadb:
+    container_name: mariadb
+    #hostname: mariadb.srcs_inception
+    build: requeriments/mariadb/
+    env_file:
+      - .env
+    networks:
+      - webnet
+    volumes:
+      - "/var/lib/mysql"
+    expose:
+      - 3306
+    restart: always
+
 networks:
   webnet:
     driver: bridge
