@@ -1,17 +1,5 @@
 version: "3"
 services:
-  nginx:
-    container_name: "nginx"
-    build:
-      context: ./requeriments/nginx
-      dockerfile: Dockerfile
-    ports:
-      - 8080:443
-    volumes:
-      - ./requeriments/nginx/html:/var/www/html
-    networks:
-      - webnet
-
   mariadb:
     container_name: mariadb
     #hostname: mariadb.srcs_inception
