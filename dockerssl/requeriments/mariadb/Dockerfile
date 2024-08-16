@@ -6,7 +6,7 @@ COPY conf/mysqld.conf /etc/mysql/my.cnf
 COPY tools/mariadb.sh /
 RUN chmod +x /mariadb.sh
 
-RUN chown mysql:mysql /etc/mysql/my.cnf
-
+RUN chown -R mysql:mysql /etc/mysql/my.cnf
+RUN chown -R mysql:mysql /var/lib/mysql
 
 CMD ["/mariadb.sh"]
