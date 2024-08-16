@@ -8,5 +8,6 @@ RUN chmod +x /mariadb.sh
 
 RUN chown -R mysql:mysql /etc/mysql/my.cnf
 RUN chown -R mysql:mysql /var/lib/mysql
+RUN mkdir /run/mysqld
 
 CMD ["/mariadb.sh"]
