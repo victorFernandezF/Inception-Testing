@@ -1,25 +1,22 @@
 #!/bin/bash
 
+# Crear el directorio de ejecución de mysqld y establecer permisos
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
-# Start MariaDB service
-service mariadb start
+# Iniciar MariaDB en modo seguro en primer plano
+mysqld_safe --datadir='/var/lib/mysql' &
 
-# Wait for MariaDB to start up (optional, adjust time as needed)
-sleep 100
+# Esperar a que MariaDB se inicie (ajustar el tiempo si es necesario)
+sleep 10
 
-# Create the database if it doesn't exist
-mysql -uroot -p"$DB_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+# Crear la base de datos y usuario si no existen
+mysql -uroot -p"$DB_ROOT_PASSWORD" <<-EOSQL
+CREATE DATABASE IF NOT EXISTS $DB_DATABASE;
+CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';
+FLUSH PRIVILEGES;
+EOSQL
 
-# Create the user if it doesn't exist and grant privileges
-mysql -uroot -p"$DB_ROOT_PASSWORD" -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
-mysql -uroot -p"$DB_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';"
-mysql -uroot -p"$DB_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
-
-pkill -f mysqld
-
-# Instead of killing and restarting mysqld, let it run in the foreground
-# To allow for this, don't stop the service; just leave it running
-# This should be the last command so the container stays alive
-mysqld_safe
+# Mantener MariaDB corriendo en primer plano
+wait
