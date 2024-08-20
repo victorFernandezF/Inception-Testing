@@ -9,9 +9,9 @@ COPY tools/mariadb.sh /mariadb.sh
 RUN chmod +x /mariadb.sh
 
 # Crear y asegurar los directorios necesarios
-RUN mkdir -p /run/mysqld && \
-    chown -R mysql:mysql /run/mysqld && \
-    chown -R mysql:mysql /var/lib/mysql
+RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql
 
 # Exponer el puerto MariaDB
 EXPOSE 3306
