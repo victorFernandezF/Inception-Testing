@@ -3,12 +3,12 @@ services:
   nginx:
     container_name: "nginx"
     build:
-      context: ./requeriments/nginx
+      context: ./requirements/nginx
       dockerfile: Dockerfile
     ports:
       - "8080:80"
     volumes:
-      - ./requeriments/nginx/html:/var/www/html
+      - ./requirements/nginx/html:/var/www/html
     networks:
       - webnet
 
