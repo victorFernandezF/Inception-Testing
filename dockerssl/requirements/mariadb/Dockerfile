@@ -6,6 +6,7 @@ COPY ./conf/mysqld.conf /etc/mysql/mariadb.conf.d/
 
 
 COPY ./tools/mariadb.sh /
+RUN chmod +x /mariadb.sh
 
 
 CMD ["/mariadb.sh"]
