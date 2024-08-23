@@ -21,3 +21,11 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 sudo docker run hello-world
+
+## utils
+
+docker-compose down --rmi all && docker-compose down --remove-orphans
+docker-compose up --build
+
+docker-compose up -d
+docker-compose exec mariadb /bin/bash
