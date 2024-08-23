@@ -1,18 +1,31 @@
 #!/bin/bash
+set -e
 
+# Ensure the MariaDB directories have the correct ownership
+chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
+# If /var/lib/mysql is empty, initialize the database directory
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Initializing MariaDB database..."
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql --rpm
+fi
 
-service mysql start 
+# Start MariaDB server in the background
+mysqld_safe &
+sleep 10 # Wait for MariaDB to start
 
+# Create database and user using environment variables
+echo "Creating database and user..."
+mysql -u root -p"$DB_ROOT_PASSWORD" <<-EOSQL
+    CREATE DATABASE IF NOT EXISTS $DB_DATABASE;
+    CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
+    GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';
+    ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
+    FLUSH PRIVILEGES;
+EOSQL
 
-echo "CREATE DATABASE IF NOT EXISTS $db1_name ;" > db1.sql
-echo "CREATE USER IF NOT EXISTS '$db1_user'@'%' IDENTIFIED BY '$db1_pwd' ;" >> db1.sql
-echo "GRANT ALL PRIVILEGES ON $db1_name.* TO '$db1_user'@'%' ;" >> db1.sql
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;" >> db1.sql
-echo "FLUSH PRIVILEGES;" >> db1.sql
+# Stop background MariaDB server process (started by mysqld_safe)
+pkill mysqld
 
-mysql < db1.sql
-
-kill $(cat /var/run/mysqld/mysqld.pid)
-
-mysqld
+# Start MariaDB server in the foreground
+exec mysqld
