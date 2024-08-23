@@ -1,7 +1,7 @@
 # Usa la imagen base oficial de Debian Bullseye
 FROM debian:bullseye
 
-# Instala las dependencias y MariaDB
+# Instala las dependencias necesarias
 RUN apt-get update -y && \
     apt-get install -y \
     gnupg \
@@ -9,8 +9,9 @@ RUN apt-get update -y && \
     && apt-get clean
 
 # Añade la clave de firma y el repositorio de MariaDB
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xF1656F24C74CD1D8 && \
-    echo "deb [arch=amd64] http://mirror.jmu.edu/pub/mariadb/repo/10.11/debian bullseye main" | tee /etc/apt/sources.list.d/mariadb.list
+RUN apt-get install -y software-properties-common && \
+    wget -O - https://mariadb.org/mariadb_release_signing_key.asc | apt-key add - && \
+    echo "deb [arch=amd64] http://mirror.jmu.edu/pub/mariadb/repo/10.11/debian bullseye main" > /etc/apt/sources.list.d/mariadb.list
 
 # Actualiza el repositorio e instala MariaDB
 RUN apt-get update -y && \
