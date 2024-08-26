@@ -7,4 +7,7 @@ RUN apt install curl -y
 COPY ./tools/wordpress.sh /
 COPY ./conf/php-fpm.conf /
 
+RUN chmod 777 /wordpress.sh
+RUN chown /wordpress.sh
+
 CMD [ "/wordpress.sh" ]
