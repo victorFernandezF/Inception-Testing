@@ -50,7 +50,7 @@ volumes:
       o: bind
       device: "/home/victofer/data/mariadb/"
 
-  mariadb:
+  wordpress:
     driver: local
     driver_opts:
       type: none
