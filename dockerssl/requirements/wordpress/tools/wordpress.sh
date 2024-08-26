@@ -42,12 +42,12 @@ EOF
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
 	mv wp-cli.phar /usr/bin/wp
-	wp core install --allow-root --url=https://franmart.42.fr --title=franmart \
+	wp core install --allow-root --url=https://victofer.42.fr --title=victofer \
 		--admin_user=$WP_USER --admin_password=$WP_PASSWORD \
 		--admin_email=$WP_EMAIL --path=$WORDPRESS_FOLDER
 fi
 
-chown -R franmart:wp_group $WORDPRESS_FOLDER && chmod -R 775 $WORDPRESS_FOLDER
+chown -R victofer:wp_group $WORDPRESS_FOLDER && chmod -R 775 $WORDPRESS_FOLDER
 
 # Use -F to prevent daemonizing the php-fpm
 php-fpm81 -y /etc/php/8.1/fpm/php-fpm.conf -F
