@@ -23,6 +23,21 @@ services:
       - webnet
     restart: always
 
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    networks:
+      - webnet
+    volumes:
+      - "wordpress:/var/www/wordpress"
+    ports:
+      - "9000:9000"
+    restart: always
+
 networks:
   webnet:
     driver: bridge
@@ -34,3 +49,10 @@ volumes:
       type: none
       o: bind
       device: "/home/victofer/data/mariadb/"
+
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/home/victofer/data/wordpress/"
