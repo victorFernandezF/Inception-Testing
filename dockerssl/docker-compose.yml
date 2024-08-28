@@ -8,9 +8,12 @@ services:
     ports:
       - 8080:443
     volumes:
-      - ./requirements/nginx/html:/var/www/html
-    networks:
+      - wordpress:/var/www/html
+    depends_on:
+      - wordpress
+    network:
       - webnet
+    restart: always
 
   mariadb:
     container_name: mariadb
