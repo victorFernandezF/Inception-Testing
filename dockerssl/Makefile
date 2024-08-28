@@ -1,5 +1,11 @@
 all : up
 
+exec-nginx:
+	@docker-compose -f ./docker-compose.yml down --rmi all 
+	@docker-compose -f ./docker-compose.yml up -d
+	@docker-compose exec nginx /bin/bash
+
+
 build : 
 	@docker-compose -f ./docker-compose.yml up --build
 
