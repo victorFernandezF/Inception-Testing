@@ -12,7 +12,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - inception
+      - webnet
     restart: always
 
   mariadb:
@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     networks:
-      - inception
+      - webnet
     restart: always
 
   wordpress:
@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
     networks:
-      - inception
+      - webnet
     volumes:
       - "wordpress:/var/www/wordpress"
     ports:
@@ -42,7 +42,7 @@ services:
     restart: always
 
 networks:
-  inception:
+  webnet:
     driver: bridge
 
 volumes:
