@@ -1,53 +1,54 @@
-#!/bin/ash
+#!/bin/bash
 
-#https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-on-ubuntu-20-04-with-a-lamp-stack
 
-WORDPRESS_FOLDER="/var/www/wordpress"
-CONFIG_FILE="$WORDPRESS_FOLDER/wp-config.php"
 
-if [ -f "/usr/bin/wp" ] && [ wp core is-installed ]; then
-	echo "Wordpress is already installed..."
-else
-	cd /tmp && wget http://wordpress.org/latest.tar.gz && tar -xzvf latest.tar.gz
-	mkdir -p /tmp/wordpress/wp-content/upgrade
-	cp -a /tmp/wordpress/. $WORDPRESS_FOLDER
+# create directory to use in nginx container later and also to setup the wordpress conf
+echo "inside script"
+mkdir /var/www/
+mkdir /var/www/html
 
-	# Setup permissions
-	chmod 755 -R $WORDPRESS_FOLDER
-	chmod 644 -R $WORDPRESS_FOLDER
+cd /var/www/html
 
-	cat << EOF > $CONFIG_FILE
-	<?php
-	define( 'DB_NAME', '$DB_NAME' );
-	define( 'DB_USER', '$DB_USER' );
-	define( 'DB_PASSWORD', '$DB_PASSWORD' );
-	define( 'DB_HOST', 'mariadb' );
-	define( 'DB_CHARSET', 'utf8' );
-	define( 'DB_COLLATE', '' );
-	define( 'FS_METHOD', 'direct');
 
-EOF
+rm -rf *
 
-	wget -qO - https://api.wordpress.org/secret-key/1.1/salt/ >> $CONFIG_FILE
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
 
-	echo '$table_prefix = "wp_";' >> $CONFIG_FILE
-	cat << EOF >> $CONFIG_FILE
-	define( 'WP_DEBUG', false );
-	if ( ! defined( 'ABSPATH' ) ) {
-		define( 'ABSPATH', __DIR__ . '/' );
-	}
-	require_once ABSPATH . 'wp-settings.php';
-EOF
+chmod +x wp-cli.phar 
 
-	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-	chmod +x wp-cli.phar
-	mv wp-cli.phar /usr/bin/wp
-	wp core install --allow-root --url=https://franmart.42.fr --title=franmart \
-		--admin_user=$WP_USER --admin_password=$WP_PASSWORD \
-		--admin_email=$WP_EMAIL --path=$WORDPRESS_FOLDER
-fi
+mv wp-cli.phar /usr/local/bin/wp
 
-chown -R franmart:wp_group $WORDPRESS_FOLDER && chmod -R 775 $WORDPRESS_FOLDER
 
-# Use -F to prevent daemonizing the php-fpm
-php-fpm81 -y /etc/php/8.1/fpm/php-fpm.conf -F
+
+wp core download --allow-root
+
+mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+
+mv /wp-config.php /var/www/html/wp-config.php
+
+
+sed -i -r "s/db1/$db_name/1"   wp-config.php
+sed -i -r "s/user/$db_user/1"  wp-config.php
+sed -i -r "s/pwd/$db_pwd/1"    wp-config.php
+
+wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
+
+wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
+
+wp theme install astra --activate --allow-root
+
+wp plugin install redis-cache --activate --allow-root
+
+wp plugin update --all --allow-root
+
+
+ 
+sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
+
+mkdir /run/php
+
+
+
+wp redis enable --allow-root
+
+/usr/sbin/php-fpm7.3 -F
