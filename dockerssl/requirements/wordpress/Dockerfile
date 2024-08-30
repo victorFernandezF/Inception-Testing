@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt-get -y update && apt-get upgrade -y
+
 RUN apt-get install -y wget curl php7.4 php-fpm php-mysql mariadb-client
 
 RUN wget https://es.wordpress.org/wordpress-5.8.3-es_ES.tar.gz -P /var/www && \
