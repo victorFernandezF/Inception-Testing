@@ -6,7 +6,7 @@ WP_CONFIG_SAMPLE="/var/www/wordpress/wp-config-sample.php"
 WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 
 echo "SE EJECUTO EL SCRIPT"
-
+sleep 10;
 if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
     # Descargar WP-CLI
     curl -o /usr/local/bin/wp $WP_CLI_URL
