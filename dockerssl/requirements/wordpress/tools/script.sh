@@ -16,7 +16,7 @@ if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
 
     # Configurar wp-config.php
     sed -i "s/password_here/$DB_PASSWORD/g" $WP_CONFIG_FILE
-    sed -i "s/localhost/mariadb/g" $WP_CONFIG_FILE
+    sed -i "s/localhost/mariadb.srcs_inception/g" $WP_CONFIG_FILE
     sed -i "s/username_here/$DB_USER/g" $WP_CONFIG_FILE
     sed -i "s/database_name_here/$DB_NAME/g" $WP_CONFIG_FILE
 

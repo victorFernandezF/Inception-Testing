@@ -17,6 +17,7 @@ services:
 
   mariadb:
     container_name: mariadb
+    hostname: mariadb.srcs_inception
     build: ./requirements/mariadb/.
     volumes:
       - mariadb:/var/lib/mysql
