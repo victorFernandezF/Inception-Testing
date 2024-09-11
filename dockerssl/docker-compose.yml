@@ -28,7 +28,7 @@ services:
       - webnet
     restart: always
     expose:
-      - "3360
+      - "3360"
 
   wordpress:
     container_name: wordpress
