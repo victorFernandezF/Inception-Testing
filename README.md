@@ -29,3 +29,18 @@ docker-compose up --build
 
 docker-compose up -d
 docker-compose exec mariadb /bin/bash
+
+# INSTALL
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+Next, set the correct permissions so that the docker-compose command is executable:
+
+sudo chmod +x /usr/local/bin/docker-compose
+To verify that the installation was successful, you can run:
+
+docker-compose --version
+You’ll see output similar to this:
+
+Output
+docker-compose version 1.29.2, build 5becea4c
