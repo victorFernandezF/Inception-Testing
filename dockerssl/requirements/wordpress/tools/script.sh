@@ -6,7 +6,6 @@ WP_CONFIG_SAMPLE="/var/www/wordpress/wp-config-sample.php"
 WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 
 echo "SE EJECUTO EL SCRIPT"
-
 if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
     # Descargar WP-CLI
     curl -o /usr/local/bin/wp $WP_CLI_URL
@@ -20,6 +19,8 @@ if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
     sed -i "s/localhost/mariadb.srcs_inception/g" $WP_CONFIG_FILE
     sed -i "s/username_here/$DB_USER/g" $WP_CONFIG_FILE
     sed -i "s/database_name_here/$DB_NAME/g" $WP_CONFIG_FILE
+
+    echo "middle script"
 
     # Instalar WordPress
     wp core install --allow-root --url=$URL --title=$DB_USER \
