@@ -41,7 +41,7 @@ services:
       - "wordpress:/var/www/wordpress"
     ports:
       - "9000:9000"
-    restart: always
+    restart: on-failure
 
 networks:
   webnet:
