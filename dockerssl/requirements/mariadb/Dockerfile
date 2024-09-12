@@ -7,8 +7,7 @@ COPY ./tools/.env /.env
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 
 RUN chmod +x script.sh
-# Ensure directories exist and have the correct permissions
-#RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
+
 EXPOSE 3306
 
 CMD ["/script.sh"]
