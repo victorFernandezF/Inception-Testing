@@ -4,7 +4,7 @@ RUN apt-get update -y && apt-get install -y mariadb-server
 
 COPY ./tools/script.sh /
 COPY ./tools/.env /.env
-COPY ./conf/mysqld.conf /etc/mysql/my.cnf
+COPY ./conf/my.cnf /etc/mysql/my.cnf
 
 RUN chmod +x script.sh
 # Ensure directories exist and have the correct permissions
