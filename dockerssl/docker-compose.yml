@@ -1,65 +1,63 @@
+version: "3.8"
+
 services:
   nginx:
-    container_name: "nginx"
-    build:
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
-    env_file: ./.env
-    ports:
-      - "433:443"
+    container_name: nginx
     volumes:
       - wordpress:/var/www/wordpress
+    networks:
+      - inception
     depends_on:
       - wordpress
-    networks:
-      - webnet
-    restart: always
+    build:
+      context: ./requeriments/nginx
+    env_file: ./.env
+    ports:
+      - "443:443"
+    restart: on-failure
 
   mariadb:
     container_name: mariadb
     hostname: mariadb.srcs_inception
+    networks:
+      - inception
     build:
-      context: ./requirements/mariadb/.
+      context: ./requeriments/mariadb
+    env_file: ./.env
     volumes:
       - mariadb:/var/lib/mysql
-    env_file: ./.env
-    networks:
-      - webnet
-    restart: always
+    restart: unless-stopped
     expose:
-      - "3360"
+      - "3306"
 
   wordpress:
     container_name: wordpress
-    hostname: wordpress.srca_inception
+    hostname: wordpress.srcs_inception
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
     build:
-      context: ./requirements/wordpress/
+      context: ./requeriments/wordpress
+    env_file: ./.env
     depends_on:
       - mariadb
-    env_file: ./.env
-    networks:
-      - webnet
-    volumes:
-      - "wordpress:/var/www/wordpress"
-    ports:
-      - "9000:9000"
     restart: on-failure
 
-networks:
-  webnet:
-    driver: bridge
-
 volumes:
-  mariadb:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "/home/victofer/data/mariadb/"
-
   wordpress:
     driver: local
     driver_opts:
-      type: none
-      o: bind
-      device: "/home/victofer/data/wordpress/"
+      type: "none"
+      o: "bind"
+      device: "/home/victofer/data/wordpress"
+  mariadb:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "/home/victofer/data/mariadb"
+
+networks:
+  inception:
+    driver: bridge
