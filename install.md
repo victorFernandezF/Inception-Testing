@@ -1,73 +1,71 @@
-# Instrucciones para Instalar Docker y Docker Compose en Lubuntu
+# HOW TO INSTALL DOCKER AND DOCKER-COMPOSE IN LUBUNTO
 
-## 1. Instala Docker (si no lo tienes ya instalado)
+## 1. Install Docker
 
-Primero, debes asegurarte de tener Docker instalado en tu sistema. Si no lo tienes, sigue estos pasos:
-
-### 1.1 Actualiza los paquetes existentes:
+### 1.1 update packages:
 
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-### 1.2 Instala los paquetes necesarios:
+### 1.2 Install packages:
 
 ```bash
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
 
-### 1.3 Añade la clave GPG de Docker:
+### 1.3 Add Docker GPG Key:
 
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
 
-### 1.4 Añade el repositorio oficial de Docker:
+### 1.4 Add Docker`s oficial repo:
 
 ```bash
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-### 1.5 Instala Docker:
+### 1.5 Install Docker:
 
 ```bash
 sudo apt update
 sudo apt install docker-ce
 ```
 
-### 1.6 Verifica que Docker está instalado correctamente:
+### 1.6 Verify Docker installation:
 
 ```bash
 sudo systemctl status docker
 ```
 
-## 2. Instala Docker Compose
+## 2. Install Docker-Compose
 
-### 2.1 Descarga la versión más reciente de Docker Compose:
+### 2.1 Download latest Docker Compose:
 
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d '"' -f 4)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 
-### 2.2 Aplica los permisos de ejecución:
+### 2.2 Add execution permission:
 
 ```bash
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### 2.3 Verifica la instalación y la versión instalada:
+### 2.3 Verify installation:
 
 ```bash
 docker-compose --version
 ```
 
-## 3. (Opcional) Habilitar Docker para tu usuario
+## 3. (Optional) Enable Docker for your user
 
-Si no quieres usar `sudo` cada vez que uses Docker, puedes agregar tu usuario al grupo de Docker:
+if you dont want to use 'sudo' every time you use Docker.
 
 ```bash
 sudo usermod -aG docker $USER
 ```
 
-Después, cierra la sesión o reinicia el sistema para que los cambios surtan efecto.
+restart Lubuntu.
