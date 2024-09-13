@@ -21,7 +21,7 @@ build :
 
 delete:
 	@docker-compose -f ./srcs/docker-compose.yml down --rmi all 
-	@docker-compose down --remove-orphans 
+	@docker-compose -f ./srcs/docker-compose.yml down --remove-orphans 
 
 up : 
 	@docker-compose -f ./srcs/docker-compose.yml up -d
