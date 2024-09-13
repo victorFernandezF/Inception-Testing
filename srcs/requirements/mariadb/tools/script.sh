@@ -9,4 +9,8 @@ mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER IDENTIFIED BY '$DB_PASS
 mysql -e "ALTER USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
 mysql -e "FLUSH PRIVILEGES;"
 
-tail -f /dev/null
+mysql < db1.sql
+
+kill $(cat /var/run/mysqld/mysqld.pid)
+
+mysqld
