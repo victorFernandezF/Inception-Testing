@@ -20,8 +20,6 @@ if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
     sed -i "s/username_here/$DB_USER/g" $WP_CONFIG_FILE
     sed -i "s/database_name_here/$DB_NAME/g" $WP_CONFIG_FILE
 
-    echo "middle script"
-
     # Instalar WordPress
     wp core install --allow-root --url=$URL --title=$DB_USER \
         --admin_user=$DB_USER --admin_password=$DB_PASSWORD \
