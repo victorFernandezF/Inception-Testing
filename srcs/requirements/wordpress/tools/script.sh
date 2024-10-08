@@ -15,9 +15,9 @@ if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
     sed -i "s/username_here/$DB_USER/g" $WP_CONFIG_FILE
     sed -i "s/database_name_here/$DB_NAME/g" $WP_CONFIG_FILE
 
-    wp core install --allow-root --url=$URL --title=$DB_USER \
-        --admin_user=$DB_USER --admin_password=$DB_PASSWORD \
-        --admin_email=$DB_EMAIL --path=/var/www/wordpress
+    wp core install --allow-root --url=$URL --title=$WP_TITLE \
+        --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD \
+        --admin_email=$WP_ADMIN_EMAIL --path=/var/www/wordpress
 
     wp user create $DB_USER2 $DB_EMAIL2 --user_pass=$DB_PASSWORD2 \
         --role=author --allow-root --path=/var/www/wordpress
