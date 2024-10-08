@@ -21,9 +21,7 @@ if ! [[ -f /var/www/wordpress/wp-config.php ]]; then
 
     wp user create $DB_USER2 $DB_EMAIL2 --user_pass=$DB_PASSWORD2 \
         --role=author --allow-root --path=/var/www/wordpress
-    
-    wp user create $WP_ADMIN_USR $WP_ADMIN_EMAIL --user_pass=$WP_ADMIN_PWD \
-        --role=author --allow-root --path=/var/www/wordpress
+
 else
     echo "wp-config file already"
 fi
