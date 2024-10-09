@@ -25,5 +25,4 @@ else
     echo "wp-config file already"
 fi
 
-# Iniciar el servidor PHP-FPM (usando la ruta completa)
 /usr/sbin/php-fpm7.4 -y /etc/php/7.4/fpm/php-fpm.conf -F

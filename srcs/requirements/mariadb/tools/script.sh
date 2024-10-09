@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Iniciar el servicio de MariaDB
 service mariadb start 
 
-# Esperar un momento para que el servicio se inicialice completamente
 sleep 5
 
-# Ejecutar los comandos SQL
 mysql -e "FLUSH PRIVILEGES;"
 mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
 mysql -e "CREATE USER IF NOT EXISTS '$DB_USER@wordpress.srcs_incetion' IDENTIFIED BY '$DB_PASSWORD';"
