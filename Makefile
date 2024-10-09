@@ -19,7 +19,8 @@ exec-wordpress:
 build : 
 	@docker-compose -f ./srcs/docker-compose.yml up --build
 
-delete:
+clean:
+	@docker-compose -f ./srcs/docker-compose.yml down
 	@docker-compose -f ./srcs/docker-compose.yml down --rmi all 
 	@docker-compose -f ./srcs/docker-compose.yml down --remove-orphans 
 
